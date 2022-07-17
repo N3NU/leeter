@@ -20,7 +20,7 @@ declare -A dict=( \
 
 declare -a new_words=( "${user_input} " )
 
-#new_word=""
+
 #48cd3f9h1jk1mn0pq257uvwxy2
 #user prompt
 
@@ -29,7 +29,6 @@ declare -a new_words=( "${user_input} " )
 for i in $(grep -o . <<< "$user_input")
 do
 	letter_hold[${counter}]=${i}
-	#echo "${letter_hold[*]}"
 	((counter++))
 done
 count=1
@@ -37,10 +36,8 @@ count=1
 while [ $count -le ${user_input_word_length} ]
 do 
 	new_word=""
-	#echo $range_begin
 	for i in $(seq ${user_input_word_length})
 	do
-		#echo $i	
 		if [ $count -le ${user_input_word_length} ]
 		then
 			if [ $i -eq $count ]
@@ -51,10 +48,7 @@ do
 			fi
 		fi
 	done
-	echo $new_word
 	new_words+="$new_word "
-	#echo $new_word
-	#echo $count
 	((count++))
 done
 
@@ -71,21 +65,12 @@ then
 			do
 				if [ $i -ge $range_begin ] && [ $i -le $range_end ]
 				then
-					#echo ${range_end}
-					#echo $i
 					new_word=${new_word}${dict[${letter_hold[${i}]}]}
-					#echo $new_word
 				else
 					new_word=${new_word}${letter_hold[${i}]}
-					#echo "HERE ${new_word}"
 				fi
-				#new_words+="$new_word "
-				
 			done
-			echo $new_word
 			new_words+="$new_word "
-			#echo $new_word
-			#echo $count
 		fi
 		((count++))
 		if [ $range_end != ${user_input_word_length} ]
@@ -99,9 +84,7 @@ then
 		fi
 	done
 fi
-#echo ${new_words[*]}
-#echo $new_words
-echo $count
+
 ##################################
 range_begin_two=1
 range_end_two=3
@@ -116,21 +99,12 @@ then
 			do
 				if [ $i -eq $range_begin_two ] || [ $i -eq $range_end_two ]
 				then
-					#echo ${range_end_2}
-					#echo $i
 					new_word=${new_word}${dict[${letter_hold[${i}]}]}
-					#echo $new_word
 				else
 					new_word=${new_word}${letter_hold[${i}]}
-					#echo "HERE ${new_word}"
 				fi
-				#new_words+="$new_word "
-				
 			done
-			echo $new_word
 			new_words+="$new_word "
-			#echo $new_word
-			#echo $count
 		fi
 		((count++))
 		if [ $range_end_two != ${user_input_word_length} ]
