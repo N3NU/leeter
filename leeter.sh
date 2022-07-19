@@ -113,7 +113,6 @@ fi
 
 
 ###Creating new strings by uppercasing characters 2 at a time then 3 then four 
-
 for words in $(for i in ${new_words}; do echo ${i}; done | sort | uniq)
 do
 	range_begin_three=1
@@ -128,6 +127,9 @@ do
 			if [ $k_count -ge $range_begin_three ] && [ $k_count -le $range_end_three ] && [[ $k == [a-z] ]]
 			then
 				new_word=${new_word}${k^^$k}
+			elif [ $k_count -ge $range_begin_three ] && [ $k_count -le $range_end_three ] && [[ $k == [0-9] ]]
+			then
+				new_word=${new_word}${letter_hold[${k_count}]^^}
 			else
 				new_word=${new_word}${k}
 			fi
@@ -149,8 +151,6 @@ done
 
 
 ###Creating new strings by changing two at a time ex. element 1 and 3 then element 1 and 4...*******************************************
-range_begin_two=1
-range_end_two=3
 for words in $(for i in ${new_words}; do echo ${i}; done | sort | uniq)
 do
 	range_begin_two=1
@@ -188,27 +188,27 @@ do
 	done	
 done
 
-
 ###Creating new strings by uppercasing two at a time ex. element 1 and 3 then element 1 and 4...
-range_begin_four=1
-range_end_four=3
-if [ ${user_input_word_length} -gt 3 ]
-then
-
-	count=1
-	while [ $count -gt 0 ] && [ $count -lt $combinations ]
+for words in $(for i in ${new_words}; do echo ${i}; done | sort | uniq)
+do
+	range_begin_four=1
+	range_end_four=3
+	holder=3
+	while [ ${holder} -le ${user_input_word_length} ]
 	do
 		if [ ${range_end_four} -le ${user_input_word_length} ]
 		then
 			new_word=""
-			for i in $(seq ${user_input_word_length})
+			k_count=1
+			for k in $(grep -o . <<< "$words")
 			do
-				if [ $i -eq $range_begin_four ] || [ $i -eq $range_end_four ] && [[ ${letter_hold[${i}]} == [a-z] ]]
+				if [ $k_count -eq $range_begin_four ] || [ $k_count -eq $range_end_four ] && [[ ${k} == [a-z] ]]
 				then
-					new_word=${new_word}${letter_hold[${i}]^^${letter_hold[${i}]}}
+					new_word=${new_word}${k^^${k}}
 				else
-					new_word=${new_word}${letter_hold[${i}]}
+					new_word=${new_word}${k}
 				fi
+				((k_count++))
 			done
 			new_words+="$new_word "
 		fi
@@ -219,20 +219,20 @@ then
 		elif [ $range_begin_four != $((${user_input_word_length}-2)) ]
 		then
 			((range_begin_four++))
-			range_end_four=$((${diction_four[character_position]}+1))
-			diction_four[character_position]=$range_end_four
+			range_end_four=$((${holder}+1))
+			holder=$range_end_four
 		else
 			break
 		fi
 	done	
-fi
-
+done
 
 
 
 ###Creating inverse strings of the strings in $new_words
-new_words=$(for i in ${new_words}; do echo ${i}; done | sort | uniq)
-for i in ${new_words}
+#new_words=$(for i in ${new_words}; do echo ${i}; done | sort | uniq)
+#for i in ${new_words}
+for i in $(for i in ${new_words}; do echo ${i}; done | sort | uniq)
 do
 	new_word=""
 	for k in $(grep -o . <<< $i)
@@ -278,40 +278,5 @@ for i in ${new_words}; do echo ${i}; done
 
 ##hold
 
-range_begin_two=1
-range_end_two=3
-if [ ${user_input_word_length} -gt 3 ]
-then
 
-	count=1
-	while [ $count -gt 0 ] && [ $count -lt $combinations ]
-	do
-		if [ ${range_end_two} -le ${user_input_word_length} ]
-		then
-			new_word=""
-			for i in $(seq ${user_input_word_length})
-			do
-				if [ $i -eq $range_begin_two ] || [ $i -eq $range_end_two ]
-				then
-					new_word=${new_word}${dict[${letter_hold[${i}]}]}
-				else
-					new_word=${new_word}${letter_hold[${i}]}
-				fi
-			done
-			new_words+="$new_word "
-		fi
-		((count++))
-		if [ $range_end_two != ${user_input_word_length} ]
-		then
-			((range_end_two++))
-		elif [ $range_begin_two != $((${user_input_word_length}-2)) ]
-		then
-			((range_begin_two++))
-			range_end_two=$((${diction_two[character_position]}+1))
-			diction_two[character_position]=$range_end_two
-		else
-			break
-		fi
-	done	
-fi
 
