@@ -341,7 +341,6 @@ else
 		echo -e "${DG}[+]${NC} ${LG}Output file: ${1}.txt${NC}"
 		echo -e "${DG}[+]${NC} ${LG}Permutations: $(wc -w ${1}.txt | awk -F " " '{print $1}')${NC}"
 	fi
-	#for i in $(cat jane.txt); do for k in $(cat street.txt); do echo ${i}${k};done;done > janestreet.txt
 
 
 
