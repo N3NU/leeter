@@ -333,8 +333,12 @@ else
 			if [ $count_hold -eq ${iterations} ]
 			then
 				mv ${count_hold}.txt ${1}.txt
+				echo -e "${DG}[+]${NC} ${LG}Output file: ${1}.txt${NC}"
+				echo -e "${DG}[+]${NC} ${LG}Permutations: $(wc -w ${1}.txt | awk -F " " '{print $1}')${NC}"
 			fi
 		done
+#		echo -e "${DG}[+]${NC} ${LG}Output file: ${1}.txt${NC}"
+#		echo -e "${DG}[+]${NC} ${LG}Permutations: $(wc -w ${1}.txt | awk -F " " '{print $1}')${NC}"
 	elif [ ${iterations} -eq 1 ]
 	then
 		mv 1.txt ${1}.txt
