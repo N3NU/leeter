@@ -38,7 +38,7 @@ $ ./leeter.sh leet
 [+] Output file: leet.txt
 [+] Permutations: 81
 ```
-## Out put gets saved to a text file named after the input string.
+## Output gets saved to a text file named after the input string.
 ```
 $ cat leet.txt 
 1337
